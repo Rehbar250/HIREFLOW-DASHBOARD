@@ -1,0 +1,59 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Candidate {
+  id         String   @id @default(cuid())
+  name       String
+  email      String   @default("")
+  phone      String   @default("")
+  role       String   @default("")
+  location   String   @default("")
+  experience Int      @default(0)
+  skills     String   @default("[]") // JSON-encoded string[]
+  status     String   @default("new")
+  notes      String   @default("")
+  source     String   @default("")
+  createdAt  DateTime @default(now())
+}
+
+model Job {
+  id            String   @id @default(cuid())
+  title         String
+  department    String   @default("")
+  location      String   @default("")
+  minExperience Int      @default(0)
+  requiredSkills String  @default("[]") // JSON-encoded string[]
+  description   String   @default("")
+  open          Boolean  @default(true)
+  createdAt     DateTime @default(now())
+}
+
+model EmailLog {
+  id            String   @id @default(cuid())
+  to            String
+  candidateName String   @default("")
+  subject       String
+  body          String
+  template      String   @default("")
+  auto          Boolean  @default(false)
+  delivered     Boolean  @default(false)
+  createdAt     DateTime @default(now())
+}
+
+model Template {
+  id      String @id
+  name    String
+  subject String
+  body    String
+}
+
+model Setting {
+  key   String @id
+  value String
+}
