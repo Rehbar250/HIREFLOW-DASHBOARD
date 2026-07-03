@@ -57,7 +57,7 @@ const isStaticPages = typeof window !== "undefined" && (
 async function mockReq(url: string, options?: RequestInit): Promise<any> {
   initDb();
   const method = options?.method || "GET";
-  const body = options?.body ? JSON.parse(options.body) : null;
+  const body = (options?.body && typeof options.body === "string") ? JSON.parse(options.body) : null;
   const path = url.split("?")[0];
 
   const getList = (key: string) => JSON.parse(localStorage.getItem(key) || "[]");
